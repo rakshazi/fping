@@ -56,7 +56,7 @@ class Handler
 
         return (new $class())
             ->setAddress($address)
-            ->setTimeout($timeout)
+            ->setTimeout((int) $timeout)
             ->setOptional($optional);
     }
 }
