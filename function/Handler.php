@@ -15,7 +15,7 @@ class Handler
     {
         try {
             $data = $this->preprocess($input);
-            echo (int) $this->getChecker($data)->check();
+            echo json_encode($this->getChecker($data)->check());
         } catch (\Throwable $t) {
             echo $t->__toString();
         }

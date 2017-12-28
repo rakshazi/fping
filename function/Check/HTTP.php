@@ -62,9 +62,9 @@ class HTTP implements CheckInterface
     /**
      * Run check.
      *
-     * @return bool
+     * @return array
      */
-    public function check(): bool
+    public function check(): array
     {
         $h = curl_init();
         curl_setopt_array($h, [
@@ -77,20 +77,34 @@ class HTTP implements CheckInterface
 
         $response = curl_exec($h);
         $code = curl_getinfo($h, CURLINFO_HTTP_CODE);
+        $time = curl_getinfo($h, CURLINFO_TOTAL_TIME);
+        $result = [
+            'status_code' => $code,
+            'time' => round($time * 1000, 0),
+            'should_contain' => true,
+            'should_not_contain' => true,
+            'status' => false,
+        ];
         curl_close($h);
 
         if (200 !== $code) {
-            return false;
+            return $result;
         }
 
         if ($this->should_contain && (false === strpos($response, $this->should_contain))) {
-            return false;
+            $result['should_contain'] = false;
+
+            return $result;
         }
 
         if ($this->should_not_contain && (false !== strpos($response, $this->should_not_contain))) {
-            return false;
+            $result['should_not_contain'] = false;
+
+            return $result;
         }
 
-        return true;
+        $result['status'] = true;
+
+        return $result;
     }
 }

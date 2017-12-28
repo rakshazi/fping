@@ -10,6 +10,8 @@ Simple microservice / [function](https://openfaas.com) to check target server, s
     - [OpenFaaS](#openfaas)
     - [Composer (optional)](#composer-optional)
     - [API](#api)
+        + [Request](#request)
+        + [Response](#response)
 * [Check types](#check-types)
     - [HTTP](#http)
 
@@ -25,7 +27,7 @@ docker run -d -p 8080:8080 rakshazi/fping
 curl -X POST -d "type=HTTP&address=https://google.com" localhost:8080
 
 #response
-1
+{"status_code":200,"time":0.448615,"should_contain":true,"should_not_contain":true,"status":true}
 ```
 
 ### OpenFaaS
@@ -41,6 +43,8 @@ composer require rakshazi/fping
 ```
 
 ### API
+
+#### Request
 
 fping built on top of [OpenFaaS Watchdog](https://openfaas.com) to provide simple API and integration with OpenFaaS.
 
@@ -61,6 +65,20 @@ To call fping, you should send **POST** request to fping address (in example abo
 
 ```
 type=Check type&address=Target address&timeout=5&optional[param1]=val1&optional[param2]=val2
+```
+
+#### Response
+
+**json**:
+
+```json
+{
+    "status_code":200, //HTTP response status code
+    "time":448, //response time in ms
+    "should_contain":true, //optional for HTTP
+    "should_not_contain":true, //optional for HTTP
+    "status":true //check status - is target up or down
+}
 ```
 
 ## Check types

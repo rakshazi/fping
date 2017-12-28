@@ -36,7 +36,7 @@ interface CheckInterface
     /**
      * Run check.
      *
-     * @return bool
+     * @return array
      */
-    public function check(): bool;
+    public function check(): array;
 }
