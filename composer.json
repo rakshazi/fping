@@ -1,0 +1,14 @@
+{
+    "name": "rakshazi/fping",
+    "description": "Simple microservice / function to check target health",
+    "require": {
+        "php": "^7.1",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "fping\\": "function/"
+        }
+    }
+}
