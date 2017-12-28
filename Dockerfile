@@ -1,3 +1,8 @@
+FROM composer AS builder
+
+COPY . /app
+RUN  composer update --no-dev --ignore-platform-reqs --no-interaction --no-progress -a -d /app
+
 FROM alpine:latest
 
 ARG FAAS_RELEASE=0.6.15
@@ -13,4 +18,4 @@ RUN apk --no-cache add curl php7 php7-json php7-curl && \
     curl -sSL "https://github.com/openfaas/faas/releases/download/$FAAS_RELEASE/fwatchdog" > /usr/bin/fwatchdog && \
     chmod +x /usr/bin/fwatchdog
 
-COPY . /app
+COPY --from=builder /app /app
