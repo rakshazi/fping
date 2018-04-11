@@ -70,7 +70,7 @@ class HTTP implements CheckInterface
         curl_setopt_array($h, [
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL => $this->address,
-            CURLOPT_CONNECTTIMEOUT => $this->timeout,
+            CURLOPT_TIMEOUT => $this->timeout,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_USERAGENT => 'rakshazi/fping bot',
         ]);
